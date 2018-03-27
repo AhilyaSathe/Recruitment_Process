@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Recruitment Process</title>
+  <!-- Bootstrap core CSS-->
+  <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom fonts for this template-->
+  <link href="static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <!-- Page level plugin CSS-->
+  <link href="static/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+  <!-- Custom styles for this template-->
+  <link href="static/css/sb-admin.css" rel="stylesheet">
+ <!--  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet"> -->
+      <script src="static/vendor/jquery/jquery.min.js"></script>
+  
+   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+ <script src="static/js/teamLeader.js"></script> 
+ 
+</head>
+
+
+ <body class="fixed-nav sticky-footer bg-dark" id="page-top" ng-app="tlApp" ng-controller="tlController">
+  <!-- Navigation-->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <a class="navbar-brand" href="">Recruitment Process</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+          <a class="nav-link" href="index.html">
+            <i class="fa fa-fw fa-dashboard"></i>
+            <span class="nav-link-text">Dashboard</span>
+          </a>
+        </li>
+     
+      
+            
+            </ul> 
+          
+      <ul class="navbar-nav sidenav-toggler">
+        <li class="nav-item">
+          <a class="nav-link text-center" id="sidenavToggler">
+            <i class="fa fa-fw fa-angle-left"></i>
+          </a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+ 
+ 	<!-- code for displaying list -->
+ 	<div class="content-wrapper">
+    	<div class="container-fluid">
+ 		   <div id="centeralDiv">
+    		
+    			 <form class="form-inline">
+        				<div class="form-group">
+            			<label >Search</label>
+           				 <input type="text" ng-model="search" class="form-control" placeholder="Search">
+        				</div>
+    			</form>
+   
+    <!--   <paging> -->
+   			 <table class="table table-bordered" >
+                            <thead>
+                <tr>
+                <th class="sorting_asc" aria-sort="ascending">Applicant Name</th>  
+                <th>Applicant Experience</th> 
+                <th>Scheduled Date</th> 
+                <th>HR Name</th>
+                <th>CV</th>
+                <th>Scheduled status</th> 
+                <!-- <th></th> -->
+                
+                </tr>
+              </thead>
+             
+              <tbody>
+             <tr ng-repeat="user in listOfCandidates|filter:search| startFrom:currentPage*pageSize | limitTo:pageSize">
+
+              
+                <!-- <tr ng-repeat="user in listOfCandidates|filter:search"> -->
+                  <td>{{user.candidate.firstName}}</td>
+                <td>{{user.candidate.experience}}</td>  
+                <td>{{user.scheduled_date|date:'yyyy-MM-dd'}}</td>  
+                <td>{{user.fromUser}}</td>
+                 <td><a href="#" ng-click="downloadCV(user.candidate)" >Download CV</a></td>
+                 <td ng-if="user.scheduledStatus==='hold'"><button ng-click="rejectedStatus(user.scheduled_id)">Reject</button> <button ng-click="acceptedStatus(user.scheduled_id)">Accept</button></td>
+                  <td  ng-if="user.scheduledStatus==='reject'"><button ng-disabled>Rejected</button> 
+            </td>
+            <td  ng-if="user.scheduledStatus==='select'"><button ng-disabled>Accepted</button> 
+              
+            </td>
+               <!--  <td><button  ng-style="httpCall" >Accepted</button><button>Rejected</button></td> -->
+                <!-- <td><a href="#" ng-click="scheduleInterview(user.candidate_id)">Schedule</a></td> -->
+                
+                </tr>
+                      </tbody>
+            </table>
+            
+            <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+       		 Previous
+    		</button>
+    			{{currentPage+1}}/{{numberOfPages()}}
+   				 <button ng-disabled="currentPage >= listOfCandidates.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+        		Next
+    		</button>
+            </div>
+       </div>                   
+    </div>
+    
+ 	
+      
+    
+      <!--  <div class="card mb-3"> -->
+      
+      <!-- //to show logout button yes/no -->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fa fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-primary" href="/">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Bootstrap core JavaScript-->
+    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="static/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- <script src="static/vendor/jquery/jquery.js"></script> -->
+    <!-- Page level plugin JavaScript-->
+   	<!--   <script src="static/vendor/chart.js/Chart.min.js"></script> --> 
+    <script src="static/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="static/vendor/datatables/dataTables.bootstrap4.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="static/js/sb-admin.min.js"></script>
+    <!-- Custom scripts for this page-->
+    <script src="static/js/sb-admin-datatables.min.js"></script>
+      <!-- <script src="static/js/sb-admin-charts.min.js"></script> -->  
+    
+  	
+  </div>
+</body>
+
+</html>
