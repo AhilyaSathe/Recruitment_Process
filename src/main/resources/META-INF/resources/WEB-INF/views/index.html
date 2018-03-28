@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>Git Recruitment  Process</title>
+  <title>Recruitment Process</title>
   <!-- Bootstrap core CSS-->
   <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
@@ -18,6 +18,7 @@
   <link href="static/css/sb-admin.css" rel="stylesheet">
  <!--  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet"> -->
       <script src="static/vendor/jquery/jquery.min.js"></script>
+  
   
    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
  <script src="static/js/main.js"></script> 
@@ -142,7 +143,10 @@
                 <td ng-if="user.scheduledStatus==='select'"><a ng-disabled>Accepted</a></td>
                 <td ng-if="user.scheduledStatus==='reject'"><a ng-disabled>Rejected</a>&nbsp&nbsp<a href="#" ng-click="scheduleInterview(user.candidate_id)">Schedule</a></td>
                  <td ng-if="user.scheduledStatus==='hold'"><a ng-disabled>On Hold</a></td>
-                <td ng-if="user.scheduledStatus==='pending'"><a href="#" ng-click="scheduleInterview(user.candidate_id)">Schedule</a></td>
+                 
+                <td ng-if="user.scheduledStatus==='pending'">
+                <a href="#" ng-click="scheduleInterview(user.candidate_id,user.cv)">Schedule</a>
+                </td>
                 
                 </tr>
                       </tbody>
@@ -228,38 +232,46 @@
             
             	
           
-          <div class="dataTables_length" id="dataTable_length">
-          <label>Select TL 
-          <select ng-model="tl.tlID" name="dataTable_length" aria-controls="dataTable" class="form-control form-control-sm">
+         	
+          <label>Select TL </label>
+          </div>
+          <div class="form-row"> 
+          <select ng-model="tl.tlID" name="dataTable_length" aria-controls="dataTable" class="form-control">
           <option  ng-repeat="tl in listOfTl" ng-value="tl.user_id">{{tl.name}}</option>
-         
-          </select> </label>
+          </select> 
           </div>
 		
             <div class="form-row">
               <div class="col-md-6">
               <input type="hidden" ng-model="scheduleCandidate.candidate_id" ng-model="getCandidate.candidate_id">
                 <label for="exampleInputName">First name</label>
+                </div>
                 <input class="form-control" id="exampleInputName"   ng-model="getCandidate.firstName"  type="text" aria-describedby="nameHelp" placeholder="Enter first name">
               </div>
+              
+              <div class="form-row">
               <div class="col-md-6">
                 <label for="exampleInputLastName">Last name</label>
+                </div>
                 <input class="form-control" id="exampleInputLastName"    ng-model="getCandidate.lastName"   type="text" aria-describedby="nameHelp" placeholder="Enter last name">
               </div>
-              
-           <div class="dataTables_length" id="dataTable_length"> 
-          <label> Technology 
-          <select ng-model="getCandidate.technology"   ng-options="tl.technology for tl in techList"  name="dataTable_length" aria-controls="dataTable" class="form-control form-control-sm">
+              </div>
+              <div class="form-row">
+           
+          <label> Technology</label> 
+          <select ng-model="getCandidate.technology"   ng-options="tl.technology for tl in techList"  name="dataTable_length" aria-controls="dataTable" class="form-control">
           <!-- <option  ng-options=" tl for tl in techList">{{tl.technology}}</option> -->
          
           </select>
-           </label>
-          </div>
-            </div>
-          </div>
+           </div>
+         
           <div class="form-group">
+          <div class="form-row">
             <label for="exampleInputEmail1">Email address</label>
+            </div>
+            <div class="form-row">
             <input class="form-control" id="exampleInputEmail1" type="email"   ng-model="getCandidate.emailId" describedby="emailHelp" placeholder="Enter email">
+          </div>
           </div>
            <div class="form-group">
             <label for="exampleInputEmail1">CV</label>
@@ -267,20 +279,24 @@
           </div>
           <div class="form-group">
             <div class="form-row">
-              <div class="col-md-6">
+              
                 <label for="exampleInputPassword1">Experience</label>
+             </div>
+             <div class="form-row">
                 <input class="form-control" id="exampleInputExp" type="text"  ng-model="getCandidate.experience" placeholder="Password">
-              </div>
+              
               
            <!--  </div> -->
           </div>
           
            <div class="form-group">
             <div class="form-row">
-              <div class="col-md-6">
+             
                 <label for="exampleInputPassword1">Schedule Date</label>
+               </div>
+               <div class="form-row">
                 <input class="form-control" id="exampleInputDate" type="date" ng-model="scheduleCandidate.date" placeholder="Scheduled Date">
-              </div>
+             
              </div>
           </div>
              <input class="btn btn-primary btn-block" type="submit" value="Schedule"> 
@@ -304,7 +320,7 @@
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
+              <span aria-hidden="true">Ã—</span>
             </button>
           </div>
           <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
@@ -334,6 +350,36 @@
 <!--     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script> 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.min.js"></script> -->	
   </div>
+  
+ <!-- <div class="container">
+  <h2>Modal Example</h2>
+  Trigger the modal with a button
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+ -->
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+        
+          <h4 class="modal-title" align="center">CV Missing</h4>
+        </div>
+        <div class="modal-body">
+          <p align="center">Please Upload CV.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+<!-- </div> -->
+ 
+  
 </body>
 
 </html>

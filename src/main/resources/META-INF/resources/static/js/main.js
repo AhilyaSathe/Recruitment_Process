@@ -26,7 +26,7 @@
 					$scope.tlNames=[];
 					
 					$scope.deprtList=[];
-					$scope.techList=[];
+					$scope.techList={}	;
 					
 					$scope.listOfCandidates=[];
 					$scope.listOfTl=[];
@@ -37,12 +37,13 @@
 					getTechList();
 					getDepartList();
 					
-					
+					$scope.candidate.technology;
 					
 					//for pagination
 					$scope.currentPage = 0;
 				    $scope.pageSize = 5;
 				   /* $scope.data = [];*/
+				    
 				    $scope.numberOfPages=function()
 				    {
 				        return Math.ceil($scope.listOfCandidates.length/$scope.pageSize);                
@@ -117,6 +118,7 @@
               	        	JSON.stringify(data);
               	        	//console.log(data);
               	  	        $scope.deprtList = data.data;
+              	  	   
               	  	                      	  	        
               	         });
 	               	 }
@@ -132,6 +134,7 @@
 	              	        	JSON.stringify(data);
 	              	        	//console.log(data);
 	              	  	        $scope.techList = data.data;
+	              	  	    $scope.candidate.technology = $scope.techList[0];        
 	              	  	                      	  	        
 	              	         });
 		               	 }
@@ -150,7 +153,14 @@
 					//view of single user
 					$scope.getApplicantById=function(id)
 					{
-						registerService.getApplicantById(id)
+						/*if(cv == null)
+						{
+							alert("Enter Cv First");
+						}
+						else
+						{*/
+						
+						registerService.getApplicantById(id,cv)
 						.then(function(d)
 								{
 								//alert("in update success"+d);
@@ -184,7 +194,7 @@
 									$( "#centeralDiv" ).hide();
 									
 								});
-					}
+						/*}*/}
 					
 					
 					//update
@@ -204,8 +214,15 @@
 	               	 }
 	               	 
 	               	 //scheduleInterview(user.candidate_id)
-	               	 $scope.scheduleInterview=function(id)
+	               	 $scope.scheduleInterview=function(id,cv)
 	               	 {
+	               		 if(cv == null)
+	               		{
+	               			
+	               			$('#myModal').modal('show');
+	               		 
+	               		}
+	               		 else{
 	               		 //getDetailsOfApplicant
 		               		registerService.getApplicantById(id)
 							.then(function(d)
@@ -246,7 +263,7 @@
 							});
 		               		
 		               	 
-	               	 }
+	               		 }}
 	               	 
 	               	 
 	               	 //sendEmailDetails()
@@ -258,7 +275,7 @@
 	               		registerService.sendEmailDetails($scope.scheduleCandidate,$scope.getCandidate,$scope.tl)
 				 		   .then(function(response)
              			{
-				 			 alert("Email sent successfully");
+				 			// alert("Email sent successfully");
 				 			findAllCandidates();
 				 			 $( "#check" ).hide();
 								$( "#centeralDiv" ).show();
@@ -319,7 +336,7 @@
 	                		  },
 	               	          function(errResponse)
 	               	          {
-	               	            	alert("in error");
+	               	            	
 	               	                console.error('Error while fetching Users');
 	               	                deferred.reject(errResponse);
 	               	           });
@@ -340,7 +357,7 @@
 	                            },
 	                            function(errResponse)
 	                            {
-	                            	alert("in error");
+	                            	
 	                                console.error('Error while fetching Users');
 	                                deferred.reject(errResponse);
 	                             });
@@ -360,7 +377,7 @@
 	                            },
 	                            function(errResponse)
 	                            {
-	                            	alert("in error");
+	                            	//alert("in error");
 	                                console.error('Error while fetching getDepartList');
 	                                deferred.reject(errResponse);
 	                             });
@@ -379,7 +396,7 @@
 	                            },
 	                            function(errResponse)
 	                            {
-	                            	alert("in error");
+	                            	
 	                                console.error('Error while fetching getDepartList');
 	                                deferred.reject(errResponse);
 	                             });
@@ -400,7 +417,7 @@
 		                            },
 		                            function(errResponse)
 		                            {
-		                            	alert("in error");
+		                            	
 		                                console.error('Error while getScheduleStatusOfCandidate');
 		                                deferred.reject(errResponse);
 		                             });
@@ -423,7 +440,7 @@
 	                            },
 	                            function(errResponse)
 	                            {
-	                            	alert("in error");
+	                            	//alert("in error");
 	                                console.error('Error while findTlWithTech');
 	                                deferred.reject(errResponse);
 	                             });
@@ -513,7 +530,7 @@
 		 	                		  },
 		 	               	          function(errResponse)
 		 	               	          {
-		 	               	            	alert("in error");
+		 	               	            	
 		 	               	               // console.error('Error while fetching Users');
 		 	               	                deferred.reject(errResponse);
 		 	               	           });
