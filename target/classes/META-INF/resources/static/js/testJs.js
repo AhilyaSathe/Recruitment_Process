@@ -1,7 +1,7 @@
 // Declare app level module which depends on filters, and services
 var app = angular.module('myApp', []);
 
-function RegisterCtrl($scope,$location,$http)
+function RegisterCtrl($scope,$location,$http,$window)
 {
 	
 	 /*$scope.educationDetail.certifications = 'false'; 
@@ -126,6 +126,7 @@ function RegisterCtrl($scope,$location,$http)
          .then(function(response)
            {
                console.log("in success");
+               $window.location.href = '/';
           });
     }
 
