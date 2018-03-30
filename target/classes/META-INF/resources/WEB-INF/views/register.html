@@ -97,43 +97,52 @@
       <div class="card mb-3" >
        <div class="container" ng-controller="registerController">
     <div class="card card-register mx-auto mt-5">
-      <div class="card-header">Add an Candidate</div>
+      <div class="card-header">Add Candidate</div>
       <div class="card-body">
      
          <form ng-submit="addCandidate()" > 
           <div class="form-group">
             <div class="form-row">
-              <div class="col-md-6">
+              
                 <label for="exampleInputName">First name</label>
                 <input class="form-control" id="exampleInputName" ng-model="candidate.firstName" type="text" aria-describedby="nameHelp" placeholder="Enter first name">
               </div>
-              <div class="col-md-6">
+              <div class="form-row">
+              
                 <label for="exampleInputLastName">Last name</label>
                 <input class="form-control" id="exampleInputLastName"  ng-model="candidate.lastName" type="text" aria-describedby="nameHelp" placeholder="Enter last name">
               </div>
-             
-               <div class="dataTables_length" id="dataTable_length">
-          <label>Select Technology 
-          <select ng-model="candidate.technology" ng-options=" tl.technology for tl in techList"  name="dataTable_length" aria-controls="dataTable" class="form-control form-control-sm">
-          <!-- <option  ng-options=" tl for tl in techList">{{tl.technology}}</option> -->
-         
-          </select> </label>
+              <div class="form-group">
+             <div class="form-row">
+               
+          <label>Select Technology </label>
+          <select ng-model="candidate.technology" ng-options="data as data.technology for data in techList"   name="dataTable_length" aria-controls="dataTable" class="form-control form-control-sm">
+          <!-- <option  ng-options=" data for data in techList">{{tl.technology}}</option> -->
+          <!-- <select ng-options="obj.value as obj.text for obj in array"></select> -->
+																										         
+          </select> 
+          
           </div>
+          
             </div>
+            
           </div>
-          <div class="form-group">
+          
+          <div class="form-row">
             <label for="exampleInputEmail1">Email address</label>
             <input class="form-control" id="exampleInputEmail1" type="email"  ng-model="candidate.emailId" aria-describedby="emailHelp" placeholder="Enter email">
           </div>
+          
           <div class="form-group">
             <div class="form-row">
-              <div class="col-md-6">
+              
                 <label for="exampleInputPassword1">Experience</label>
-                <input class="form-control" id="exampleInputPassword1" type="text" ng-model="candidate.experience" placeholder="Password">
-              </div>
+                <input class="form-control" id="exampleInputPassword1" type="text" ng-model="candidate.experience" placeholder="Experience">
+              
               
             </div>
           </div>
+          
            <input class="btn btn-primary btn-block" type="submit" value="Add"> 
         
       
