@@ -30,8 +30,8 @@ public class EmailController
 	@Autowired
 	UserService userService;
 	
-	@RequestMapping(value="/sendEmailDetails/{tl}/{date}" ,method=RequestMethod.POST)
-	public ModelAndView scheduleInterview(@PathVariable("tl") String tl,@PathVariable("date") Date date,@RequestBody Candidate candidate,HttpServletRequest request )
+	@RequestMapping(value="/sendEmailDetails/{tl}/{date}/{interviewRound}" ,method=RequestMethod.POST)
+	public ModelAndView scheduleInterview(@PathVariable("interviewRound") String interviewRound,@PathVariable("tl") String tl,@PathVariable("date") Date date,@RequestBody Candidate candidate,HttpServletRequest request )
 	{
 	//	System.out.println("in scheduleInterview controller"+tl +date +candidate.getCv());
 		
@@ -46,12 +46,14 @@ public class EmailController
 		emailservice.testEmail(emailIdTo,date,candidate,hRName);
 		
 		ScheduleInterviews scheduleInterviews=new ScheduleInterviews();
-		scheduleInterviews.setUser(userTl);
+		//scheduleInterviews.setUser(userTl);
+		scheduleInterviews.setToUserId(userTl.getUser_id());
 		scheduleInterviews.setCandidate(candidate);
 		scheduleInterviews.setEmail_subject("Interview Details");
 		scheduleInterviews.setFromUser(hRName);
 		scheduleInterviews.setScheduled_date(date);
 		scheduleInterviews.setScheduledStatus(FinalSelectionStatus.hold);
+		scheduleInterviews.setInterviewRound(interviewRound);
 		
 		emailservice.saveEmail(scheduleInterviews);
 		//System.out.println("after email is saved to database");

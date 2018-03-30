@@ -64,4 +64,19 @@ public class UserServiceImpl implements UserService
 		return hrList;
 	}
 
+	@Override
+	public void addInterviewer(User user)
+	{
+		userDao.save(user);
+		
+	}
+
+	/*@Override
+	public List<User> getInterviewerList(Department department) 
+	{
+		List<User> getInterviewerList=userDao.getInterviewerList(department);
+		
+		return getInterviewerList;
+	}*/
+
 }

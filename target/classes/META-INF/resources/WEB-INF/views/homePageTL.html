@@ -28,22 +28,35 @@
  <body class="fixed-nav sticky-footer bg-dark" id="page-top" ng-app="tlApp" ng-controller="tlController">
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-    <a class="navbar-brand" href="">Recruitment Process</a>
+    <a class="navbar-brand" href="">Recruitment Process TL</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-          <a class="nav-link" href="index.html">
+          <a class="nav-link" href="/homePageTL.html">
             <i class="fa fa-fw fa-dashboard"></i>
             <span class="nav-link-text">Dashboard</span>
           </a>
         </li>
      
-      
+ 			 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Login">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-file"></i>
+            <span class="nav-link-text">Interviewer</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="collapseExamplePages">
+           
+            <li>
+              <a href="" ng-click="showAddInterviewer()">Add Interviewer</a>
+            </li>
+           <!--  <li>
+              <a href="">Schedule Interview</a>
+            </li>    -->  
             
             </ul> 
+           </ul> 
           
       <ul class="navbar-nav sidenav-toggler">
         <li class="nav-item">
@@ -58,12 +71,15 @@
           <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
             <i class="fa fa-fw fa-sign-out"></i>Logout</a>
         </li>
+        </li>
       </ul>
+      
+      
     </div>
   </nav>
  
  	<!-- code for displaying list -->
- 	<div class="content-wrapper">
+ 	<div class="content-wrapper" id="applicantsList">
     	<div class="container-fluid">
  		   <div id="centeralDiv">
     		
@@ -72,11 +88,11 @@
             			<label >Search</label>
            				 <input type="text" ng-model="search" class="form-control" placeholder="Search">
         				</div>
-    			</form>
+    			 </form>
    
-    <!--   <paging> -->
+    		<!-- <paging> -->
    			 <table class="table table-bordered" >
-                            <thead>
+                <thead>
                 <tr>
                 <th class="sorting_asc" aria-sort="ascending">Applicant Name</th>  
                 <th>Applicant Experience</th> 
@@ -84,8 +100,7 @@
                 <th>HR Name</th>
                 <th>CV</th>
                 <th>Scheduled status</th> 
-                <!-- <th></th> -->
-                
+                <th>Assign to Interviewer</th>
                 </tr>
               </thead>
              
@@ -105,11 +120,9 @@
             <td  ng-if="user.scheduledStatus==='select'"><button ng-disabled>Accepted</button> 
               
             </td>
-               <!--  <td><button  ng-style="httpCall" >Accepted</button><button>Rejected</button></td> -->
-                <!-- <td><a href="#" ng-click="scheduleInterview(user.candidate_id)">Schedule</a></td> -->
-                
-                </tr>
-                      </tbody>
+             <td><a href="#" ng-click="assignInterviewer(user.candidate.candidate_id)">Assign</a></td>
+            </tr>
+            </tbody>
             </table>
             
             <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
@@ -123,11 +136,107 @@
        </div>                   
     </div>
     
- 	
-      
+    <!-- ---------Add interviewer--------------- -->
+   <div class="card mb-3"  id="addInterviewer">
+   	 <div class="container">
+    	<div class="card card-register mx-auto mt-5">
+      		<div class="card-header">Add an Interviewer</div>
+      			<div class="card-body">
+     				<form ng-submit="addInterviewer()" > 
+         				 <div class="form-group">
+				            <div class="form-row">
+				              <!-- <div class="col-md-6"> -->
+				                <label for="exampleInputName">Enter Name</label>
+				                <input class="form-control" id="exampleInputName" ng-model="user.name" type="text" aria-describedby="nameHelp" placeholder="Enter name">
+				              <!-- </div> -->
+				              
+				             </div>
+             
+				              <div class="form-row">
+						              <div class="col-md-6">
+						                <label for="exampleInputusername">Enter username</label>
+						                <input class="form-control" id="exampleInputUsername"  ng-model="user.username" type="text" aria-describedby="nameHelp" placeholder="Enter username">
+						              </div>
+						              <div class="col-md-6">
+						                <label for="exampleInputpassword">Enter password</label>
+						                <input class="form-control" id="exampleInputPassword"  ng-model="user.password" type="password" aria-describedby="nameHelp" placeholder="Enter password">
+						  			</div>
+						  		</div>
+          	
+				          	<div class="form-row">
+				              <div class="col-md-6">
+				            	<label for="exampleInputEmail1">Email email</label>
+				            		<input class="form-control" id="exampleInputEmail1" type="email"  ng-model="user.emailId" aria-describedby="emailHelp" placeholder="Enter email">
+				          		</div>
+				              <div class="col-md-6">
+				                <label for="exampleInputexperience">Enter experience</label>
+				                <input class="form-control" id="exampleInputexperience" type="text" ng-model="user.experience" placeholder="User experience">
+				              </div>
+				            </div>
+            
+			           		 <div class="form-row">
+			             				<div class="col-md-6">
+			    							<label for="gender">Gender</label><br>
+			      							<input type="radio" name="gender" class="radio" ng-model="user.gender" ng-value="'Male'">Male &nbsp;&nbsp;&nbsp;&nbsp;
+			      							<input type="radio" name="gender" class="radio" ng-model="user.gender" ng-value="'Female'">Female
+			    						</div>
+          						</div>
+           					<input class="btn btn-primary btn-block" type="submit" value="Add"> 
+        					</div>
+       		 </form>
+      		</div>
+		</div>
+		</div>
+   </div>
+   </div>
     
-      <!--  <div class="card mb-3"> -->
+    <!-- -----------------End of add interviewer------- -->
+ 	
+      <!-- --------------Assign Interviewer---------- -->
       
+       <div class="card mb-3"  id="assignInterviewer">
+   	 <div class="container">
+    	<div class="card card-register mx-auto mt-5">
+      		<div class="card-header">Assign an Interviewer</div>
+      			<div class="card-body">
+     				<form ng-submit="assignInterview()" > 
+         				 <div class="form-group">
+				            <div class="form-row">
+				            
+				             <div class="dataTables_length" id="dataTable_length">
+						          <label>Select Interviewer 
+						          <select ng-model="assignInterviewer.interviewer" ng-options=" inter.name for inter in listOfInterviewers"  name="dataTable_length" aria-controls="dataTable" class="form-control form-control-sm">
+						          <!-- <option  ng-options=" tl for tl in techList">{{tl.technology}}</option> -->
+						         
+						          </select> </label>
+							</div>     
+				           </div> 
+             				<br>  
+			           		 <div class="form-row">
+			             				 
+        					 
+        					 <div class="dataTables_length" id="dataTable_length">
+						          <label>Select Round of Interview 
+						          <select ng-model="assignInterviewer.interviewRound" name="dataTable_length" aria-controls="dataTable" class="form-control form-control-sm">
+						          <option  ng-repeat="interviewRound in listOfIntervieRounds" ng-value="interviewRound">{{interviewRound}}</option>
+						         
+						          </select> </label>
+        					 </div>
+          						</div>
+          						<input  type="hidden" ng-model="applicantsId" >
+          						
+           					<input class="btn btn-primary btn-block" type="submit" value="Assign"> 
+        					</div>
+       		 		</form>
+      		</div>
+		</div>
+		</div>
+   </div>
+   </div>
+      
+      <!-- ---------------end of assign interviewer-------- -->
+    
+     
       <!-- //to show logout button yes/no -->
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fa fa-angle-up"></i>

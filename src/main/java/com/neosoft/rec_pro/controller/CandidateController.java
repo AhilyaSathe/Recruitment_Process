@@ -26,6 +26,7 @@ import com.neosoft.rec_pro.model.Candidate;
 import com.neosoft.rec_pro.model.CommonCandidate;
 import com.neosoft.rec_pro.model.Educational_Details;
 import com.neosoft.rec_pro.model.Employment_Details;
+import com.neosoft.rec_pro.model.ScheduleInterviews;
 import com.neosoft.rec_pro.model.Technology;
 import com.neosoft.rec_pro.service.CandidateService;
 
@@ -38,28 +39,18 @@ public class CandidateController
 	@RequestMapping(value="/addCandidate",method=RequestMethod.POST)
 	public ModelAndView addCandidate(@RequestBody Candidate candidate)
 	{
-		System.out.println(candidate.getFirstName()+" "+candidate.getTechnology());
-		
-		
-		
-	/*	Technology tech_id=candidate.getTechnology();*/
-		System.out.println("in addCandidate"+candidate.getEmailId()+" "+candidate.getLastName()+" "+candidate.getExperience());
 		candidateService.addCandidate(candidate);
-		
-		//List<Candidate> listOfCand=candidateService.listOfCandidates();
-		
 		return new ModelAndView("index");
-		/*System.out.println("added"+listOfCand.size());*/
+		
 	}
 	
 	@RequestMapping(value="/listOfCandidates",method=RequestMethod.GET)
 	public List<Candidate> listOfCandidates()
 	{
-		/*System.out.println("in addCandidate"+candidate.getEmailId()+" "+candidate.getLastName()+" "+candidate.getExperience());*/
+		
 		List<Candidate> listOfCand=candidateService.listOfCandidates();
 		return listOfCand;
 		
-		/*System.out.println("added"+listOfCand.size());*/
 	}
 	
 	@RequestMapping(value="/deleteCandidate/{id}",method=RequestMethod.POST)
@@ -104,6 +95,8 @@ public class CandidateController
 		System.out.println("candidate_id is : "+candidate_id);
 		Integer cand_id=Integer.valueOf(candidate_id);
 		System.out.println(cand_id);
+		
+		
 		
 		String status=candidateService.getScheduleStatusOfCandidate(cand_id);
 		System.out.println("status in controller: "+status);
@@ -167,5 +160,6 @@ public class CandidateController
 		
 		
 	}
-
+	
+	
 }

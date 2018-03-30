@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.neosoft.rec_pro.dao.CandidateDao;
 import com.neosoft.rec_pro.dao.ScheduleInterviewDao;
 import com.neosoft.rec_pro.model.Candidate;
+import com.neosoft.rec_pro.model.ScheduleInterviews;
 import com.neosoft.rec_pro.model.Technology;
 import com.neosoft.rec_pro.service.CandidateService;
 
@@ -90,4 +91,6 @@ public class CandidateServiceImpl implements CandidateService
 		candidateDao.save(candidate);
 		
 	}
+
+	
 }

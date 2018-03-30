@@ -46,6 +46,7 @@ public class LoginController
 		 {
 			 String firstname=user.getName();
 			 HttpSession session=request.getSession();
+			 session.setAttribute("user", user);
 			 session.setAttribute("firstname", firstname);
 			 if(user.getRole().equalsIgnoreCase("HR"))
 				 return new ModelAndView("index");

@@ -17,8 +17,8 @@ public class Status
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer statusId;
 	
-	@Column(columnDefinition = "ENUM('technical','communication','finalSelection')")
-	private SelectionType selectionType;
+	/*@Column(columnDefinition = "ENUM('technical','communication','finalSelection')")
+	private SelectionType selectionType;*/
 	
 	@Column(columnDefinition = "ENUM('good','average','excellent')")
 	private SelectionStatus selectionStatus;

@@ -8,7 +8,6 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Status.class)
 public abstract class Status_ {
 
-	public static volatile SingularAttribute<Status, SelectionType> selectionType;
 	public static volatile SingularAttribute<Status, Integer> statusId;
 	public static volatile SingularAttribute<Status, SelectionStatus> selectionStatus;
 	public static volatile SingularAttribute<Status, FinalSelectionStatus> finalStatus;

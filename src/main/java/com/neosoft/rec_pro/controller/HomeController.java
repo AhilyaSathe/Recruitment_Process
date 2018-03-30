@@ -67,6 +67,14 @@ public class HomeController
 	}
 	
 	
+	@RequestMapping("/homePageTL")
+	public ModelAndView homePageTL()
+	{
+		//System.out.println("in candidate home page");
+		return new ModelAndView("homePageTL");
+	}
+	
+	
 	
 
 }

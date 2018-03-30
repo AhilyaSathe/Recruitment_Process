@@ -31,13 +31,15 @@
 					$scope.listOfCandidates=[];
 					$scope.listOfTl=[];
 					$scope.tl={};
+					$scope.interviewRound={};
+					alert($scope.interviewRound);
 					
 					//$scope.scheduledStatus={};
 					findAllCandidates();
 					getTechList();
 					getDepartList();
 					
-					
+					$scope.listOfIntervieRounds=["First Round","Second Round","Third Round"];
 					
 					//for pagination
 					$scope.currentPage = 0;
@@ -255,7 +257,7 @@
 	               		
 	               		
 	               		//alert($scope.scheduleCandidate.date);
-	               		registerService.sendEmailDetails($scope.scheduleCandidate,$scope.getCandidate,$scope.tl)
+	               		registerService.sendEmailDetails($scope.scheduleCandidate,$scope.getCandidate,$scope.tl,$scope.interviewRound)
 				 		   .then(function(response)
              			{
 				 			 alert("Email sent successfully");
@@ -285,6 +287,7 @@
 	               var updateCandidates={};
 	               var getCandidate={};
 	               var tl={};
+	               var interviewRound={};
 	               $http.defaults.headers.post["Content-Type"] = "application/json";
 	               var factory = 
 	               {
@@ -491,7 +494,7 @@
 		               	  	 
 		               	  
 		               	  //sendEmailDetails of candidate
-		 	                function sendEmailDetails(scheduleCandidate,getCandidate,tl) 
+		 	                function sendEmailDetails(scheduleCandidate,getCandidate,tl,interviewRound) 
 		                	  	{ 
 		 	                	var deferred = $q.defer();
 		 	                	var data = {
@@ -502,7 +505,7 @@
 		 	                	var Indata = {tl:'tl.tlID',getCandidate:'getCandidate',date:'date'}
 		 	                	//alert(data);
 		 	                	//alert("in service sendEmailDetails"+scheduleCandidate.date +getCandidate.cv +tl.tlID);
-		 	                	$http.post(urlBase+'/sendEmailDetails/'+tl.tlID+'/'+scheduleCandidate.date,getCandidate)
+		 	                	$http.post(urlBase+'/sendEmailDetails/'+tl.tlID+'/'+scheduleCandidate.date+'/'+interviewRound,getCandidate)
 		 	                	
 		 	                		 .then(function(response)
 		 	                		  {

@@ -15,4 +15,6 @@ public interface UserService
 	public List<Technology> getTechnologies();
 	public Department getDepartByName(String deptName);
 	public List<User> getHrList();
+	public void addInterviewer(User user);
+	
 }

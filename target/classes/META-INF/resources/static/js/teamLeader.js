@@ -12,9 +12,28 @@ app.controller("tlController", ['tlService','$scope','$window','$location',funct
 {
 	//alert("in controller");
 	$scope.listOfCandidates=[];
+	$scope.listOfInterviewers=[];
 	$scope.user={};
+	$scope.assignInterviewer={};
+	$scope.listOfIntervieRounds=["First Round","Second Round","Third Round"];
+	
+	$scope.applicantsId={};
+	
+	 $( "#applicantsList" ).show();
+	 $( "#addInterviewer" ).hide();
+	
 	
 	findAllCandidates();
+	getInterviewerList();
+	
+	$scope.showAddInterviewer=function()
+	{
+		 $( "#applicantsList" ).hide();
+		 $( "#addInterviewer" ).show();
+		 $( "#assignInterviewer" ).hide();
+		
+	}
+	
 	
 	//for pagination
 	$scope.currentPage = 0;
@@ -28,6 +47,72 @@ app.controller("tlController", ['tlService','$scope','$window','$location',funct
     {
         $scope.listOfCandidates.push("Item "+i);
     }
+    
+    //addInterviewer()
+    $scope.addInterviewer=function()
+    {
+    	
+    	tlService.addInterviewer($scope.user)
+    	 .then(function(data) 
+    		        {
+    		 			alert("Interviewer added successfully");
+    		 			$( "#applicantsList" ).show();
+    		 			 $( "#addInterviewer" ).hide();
+    		 			$( "#assignInterviewer" ).hide();
+    		 
+    		  	     });
+    }
+    
+    
+  //finding all Interviewers
+	function getInterviewerList()
+   	 {
+		
+			tlService.getInterviewerList()
+	        .then(function(data) 
+	        {
+	        	
+	        	JSON.stringify(data);
+	        	$scope.listOfInterviewers = data.data;
+	  	     });
+   	 }
+	
+	//show div of assign interview
+	$scope.assignInterviewer=function(id)
+	{
+		console.log("id of the candidate is: "+id);
+		$scope.applicantsId=id;
+		/* angular.forEach($scope.listOfCandidates, function(item, index) 
+	  	    		
+   	  	    	{
+			 	console.log($scope.techList[index]);
+	              	  	  
+				});*/
+		
+		
+		$( "#applicantsList" ).hide();
+		 $( "#addInterviewer" ).hide();
+		 $( "#assignInterviewer" ).show();
+	}
+	
+	$scope.assignInterview=function()
+	{
+		console.log("candidate is :"+$scope.applicantsId);
+		console.log("interviewer is : "+$scope.assignInterviewer.interviewer.emailId);
+		console.log("interviewRound is : "+$scope.assignInterviewer.interviewRound);
+		
+		
+		tlService.assignInterview($scope.applicantsId,$scope.assignInterviewer.interviewer,$scope.assignInterviewer.interviewRound)
+		.then(function(data)
+		{
+			alert("Email send to interviewer successfully");
+			$( "#applicantsList" ).show();
+			 $( "#addInterviewer" ).hide();
+			 $( "#assignInterviewer" ).hide();
+		});
+		/*console.log("Tl is "+);*/
+	}
+    
 	
 	//finding all Candidates
 	function findAllCandidates()
@@ -108,17 +193,45 @@ app.controller("tlController", ['tlService','$scope','$window','$location',funct
 app.factory('tlService',['$http','$q','$location',function($http,$q,$location)
 {
 	var urlBase='http://localhost:8080';
+	var user={};
+	/*var assignInterviewer={};*/
     $http.defaults.headers.post["Content-Type"] = "application/json";
     var factory = 
     {
  		   
- 		   findAllCandidates:findAllCandidates,
- 		  downloadCV:downloadCV,
- 		 acceptedStatus:acceptedStatus,
- 		rejectedStatus:rejectedStatus
+			 		findAllCandidates:findAllCandidates,
+			 		downloadCV:downloadCV,
+			 		acceptedStatus:acceptedStatus,
+			 		rejectedStatus:rejectedStatus,
+			 		addInterviewer:addInterviewer,
+			 		getInterviewerList:getInterviewerList,
+			 		assignInterview:assignInterview
  		  
     };
     return factory;
+    
+    
+    //add interviewer
+    function addInterviewer(user)
+    {
+    	var deferred = $q.defer();
+    	
+    	$http.post(urlBase+'/addInterviewer',user)
+    	
+    		 .then(function(response)
+    		  {
+    			    
+    				 deferred.resolve(response);
+    			
+    		  },
+   	          function(errResponse)
+   	          {
+   	            	//alert("in error");
+   	                console.error('Error while adding interviewer');
+   	                deferred.reject(errResponse);
+   	           });
+    	 return  deferred.promise;
+    }
     	
     //get list of all Candidates
     function findAllCandidates() 
@@ -140,9 +253,54 @@ app.factory('tlService',['$http','$q','$location',function($http,$q,$location)
                return deferred.promise;
       }
 
+    
+    
+  //get list of all Interviewers
+    function getInterviewerList() 
+    {                       		
+    	
+        var deferred = $q.defer();
+        $http.get(urlBase+'/getInterviewerList')
+             .then(function (response) 
+              {
+           	      deferred.resolve(response);
+              },
+              function(errResponse)
+              {
+            	  	alert("in error");
+            	  	console.error('Error while fetching Users');
+            	  	deferred.reject(errResponse);
+               });
+        
+               return deferred.promise;
+      }
+    
+    function assignInterview(applicantsId,interviewer,interviewRound)
+    {
+    	console.log("in service"+applicantsId+" "+interviewer+" "+interviewRound);
+    	/*var data = {
+    			
+    			interviewer: assignInterviewer $scope.assignInterviewer.interviewRound
+     			};*/
+    	var deferred = $q.defer();
+        $http.post(urlBase+'/assignInterview/'+applicantsId+'/'+interviewRound,interviewer)
+            .then(
+            function (response)
+            {
+            	
+                deferred.resolve(response);
+            },
+            function(errResponse){
+                console.error('Error while assignInterview');
+                deferred.reject(errResponse);
+            }
+        );
+        return deferred.promise;
+    	
+    }
+    
     //downloadCV
-	
- 	  function downloadCV(fileURL)
+	  function downloadCV(fileURL)
   	 {
   		alert("in downloadCV " +fileURL);
  		 

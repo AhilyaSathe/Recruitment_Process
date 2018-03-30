@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>Recruitment Process</title>
+  <title>Git Recruitment  Process</title>
   <!-- Bootstrap core CSS-->
   <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
@@ -110,7 +110,7 @@
     <table class="table table-bordered" >
                             <thead>
                 <tr>
-                   <th class="sorting_asc" aria-sort="ascending">Applicant Name</th>  
+                <th class="sorting_asc" aria-sort="ascending">Applicant Name</th>  
                 <th>Applicant emailId</th>  
                 <th>Experience</th> 
                 <th>Technology</th>
@@ -183,15 +183,17 @@
              
              <div class="form-group">
             <div class="form-row">
-            
+            <div class="col-md-6">
               <div class="dataTables_length" id="dataTable_length">
-          <label>Select Technology 
-          <select ng-model="getCandidate.technology"   ng-options="tl.technology for tl in techList"  name="dataTable_length" aria-controls="dataTable" class="form-control form-control-sm">
-          <!-- <option  ng-options=" tl for tl in techList">{{tl.technology}}</option> -->
-         
-          </select>
-           </label>
-          </div>
+			          <label>Select Technology 
+			          <select ng-model="getCandidate.technology"   ng-options="tl.technology for tl in techList"  name="dataTable_length" aria-controls="dataTable" class="form-control form-control-sm">
+			          <!-- <option  ng-options=" tl for tl in techList">{{tl.technology}}</option> -->
+			         
+			          </select>
+			           </label>
+          	</div>
+          	</div>
+          	
           </div>
               
           </div>   
@@ -227,15 +229,22 @@
             <div class="form-row">
             
             	
-          
+          <div class="col-md-6">
           <div class="dataTables_length" id="dataTable_length">
           <label>Select TL 
           <select ng-model="tl.tlID" name="dataTable_length" aria-controls="dataTable" class="form-control form-control-sm">
           <option  ng-repeat="tl in listOfTl" ng-value="tl.user_id">{{tl.name}}</option>
          
           </select> </label>
-          </div>
-		
+          </div></div>
+		<div class="col-md-6">
+          	<div class="dataTables_length" id="dataTable_length">
+						          <label>Select Round of Interview 
+						          <select ng-model="interviewRound" name="dataTable_length" aria-controls="dataTable" class="form-control form-control-sm">
+						          <option  ng-repeat="interviewRound in listOfIntervieRounds" ng-value="interviewRound">{{interviewRound}}</option>
+						         
+						          </select> </label>
+        					 </div></div>
             <div class="form-row">
               <div class="col-md-6">
               <input type="hidden" ng-model="scheduleCandidate.candidate_id" ng-model="getCandidate.candidate_id">

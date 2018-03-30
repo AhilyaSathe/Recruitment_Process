@@ -2,11 +2,17 @@ package com.neosoft.rec_pro.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.neosoft.rec_pro.model.Candidate;
 import com.neosoft.rec_pro.model.Department;
 import com.neosoft.rec_pro.model.Technology;
 import com.neosoft.rec_pro.model.User;
@@ -19,7 +25,7 @@ public class UserController
 	@Autowired
 	UserService userService;
 	
-
+	
 	@RequestMapping(value="/getUser")
 	public User getUserById(Integer user_id)
 	{
@@ -57,4 +63,9 @@ public class UserController
 		System.out.println(" size is "+hrList.size());
 		return hrList;
 	}
+	
+	
+	
+	
+	
 }

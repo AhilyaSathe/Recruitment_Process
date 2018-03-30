@@ -9,11 +9,14 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(ScheduleInterviews.class)
 public abstract class ScheduleInterviews_ {
 
+	public static volatile SingularAttribute<ScheduleInterviews, Interviewer> interviewer;
 	public static volatile SingularAttribute<ScheduleInterviews, Integer> scheduled_id;
 	public static volatile SingularAttribute<ScheduleInterviews, Candidate> candidate;
 	public static volatile SingularAttribute<ScheduleInterviews, String> fromUser;
 	public static volatile SingularAttribute<ScheduleInterviews, FinalSelectionStatus> scheduledStatus;
+	public static volatile SingularAttribute<ScheduleInterviews, String> interviewRound;
 	public static volatile SingularAttribute<ScheduleInterviews, Date> scheduled_date;
+	public static volatile SingularAttribute<ScheduleInterviews, Integer> toUserId;
 	public static volatile SingularAttribute<ScheduleInterviews, User> user;
 	public static volatile SingularAttribute<ScheduleInterviews, String> email_subject;
 

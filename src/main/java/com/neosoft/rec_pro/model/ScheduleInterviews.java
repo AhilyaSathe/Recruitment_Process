@@ -28,11 +28,36 @@ public class ScheduleInterviews implements Serializable
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer scheduled_id;
 	
+	private Integer toUserId;
 	
+	public Integer getToUserId() {
+		return toUserId;
+	}
+
+	public void setToUserId(Integer toUserId) {
+		this.toUserId = toUserId;
+	}
+
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;
 	 	
+	public String getInterviewRound() {
+		return interviewRound;
+	}
+
+	public void setInterviewRound(String interviewRound) {
+		this.interviewRound = interviewRound;
+	}
+
+	public Interviewer getInterviewer() {
+		return interviewer;
+	}
+
+	public void setInterviewer(Interviewer interviewer) {
+		this.interviewer = interviewer;
+	}
+
 	@ManyToOne
 	@JoinColumn(name="candidate_Id")
 	private Candidate candidate;
@@ -41,6 +66,15 @@ public class ScheduleInterviews implements Serializable
 	@Enumerated(EnumType.STRING)
 	private FinalSelectionStatus scheduledStatus;
 
+
+	private Date scheduled_date;
+	private String email_subject;
+	
+	private String interviewRound;
+	@ManyToOne
+	@JoinColumn(name="inerviewer_id")
+	private Interviewer interviewer;
+	
 	
 
 	
@@ -54,10 +88,6 @@ public class ScheduleInterviews implements Serializable
 		this.scheduledStatus = scheduledStatus;
 	}
 
-	private Date scheduled_date;
-	private String email_subject;
-	
-	
 	public String getEmail_subject() {
 		return email_subject;
 	}

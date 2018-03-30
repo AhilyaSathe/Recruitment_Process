@@ -17,18 +17,23 @@ public class ScheduleInterviewServiceImpl implements ScheduleInterviewService
 	ScheduleInterviewDao scheduleInterviewDao;
 
 	@Override
-	public List<ScheduleInterviews> getScheduledInterviews() 
+	public List<ScheduleInterviews> getScheduledInterviews(Integer userId) 
 	{
-	
-		List<ScheduleInterviews> obj=scheduleInterviewDao.findAll();
+		List<ScheduleInterviews> obj=scheduleInterviewDao.findAllByUserId(userId);
 		return obj;
 	}
 
 	@Override
 	public void acceptedStatus(Integer scheduleId) 
 	{
-		System.out.println("value of status in serviceImpl : "+FinalSelectionStatus.select.name());
-		scheduleInterviewDao.updateAcceptedStatus(scheduleId);
+		//System.out.println("value of status in serviceImpl : "+FinalSelectionStatus.select.name());
+		/*boolean flag=*/scheduleInterviewDao.updateAcceptedStatus(scheduleId);
+		/*if (flag)
+			return true;
+		else 
+			return false;*/
+		//get scheduled details
+		
 		
 	}
 
@@ -47,6 +52,20 @@ public class ScheduleInterviewServiceImpl implements ScheduleInterviewService
 		scheduleInterviewDao.getRejectedStatus(scheduledId);
 		System.out.println("value in dao : ");
 		return false;
+	}
+
+	@Override
+	public ScheduleInterviews getScheduleInterview(Integer scheduledId)
+	{
+		ScheduleInterviews scheduleInterview=scheduleInterviewDao.findOne(scheduledId);
+		return scheduleInterview;
+	}
+
+	@Override
+	public ScheduleInterviews getScheduleInterviewsByCandidateID(Integer can_id)
+	{
+		
+		return scheduleInterviewDao.getScheduleInterviewsByCandidateId(can_id);
 	}
 
 }
